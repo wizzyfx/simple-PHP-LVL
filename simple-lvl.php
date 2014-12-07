@@ -19,8 +19,7 @@ function processResponse($responseData,$signature){
 		$key=openssl_get_publickey("-----BEGIN PUBLIC KEY-----\n".chunk_split(PUBLIC_KEY,64,"\n").'-----END PUBLIC KEY-----');
 		if(false===$key){return false;}
 		if(openssl_verify($responseData,base64_decode($signature),$key,OPENSSL_ALGO_SHA1)){return $regs;}else{return false;}
-	} else {
-		return false;
 	}
+	return false;
 }
 ?>
