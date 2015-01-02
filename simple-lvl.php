@@ -17,8 +17,7 @@ define('PACKAGE_NAME','YOUR PACKAGE NAME HERE');
 function processResponse($responseData,$signature){
 	if (preg_match('/([\d])\|([\d-]+?)\|'.PACKAGE_NAME.'\|([\d]{1,2}?)\|(.+?)\|([\d-]+)(?::GR=([\d-]+?)&VT=([\d-]+?)&GT=([\d-]+))?/',$responseData,$regs)){
 		$key=openssl_get_publickey("-----BEGIN PUBLIC KEY-----\n".chunk_split(PUBLIC_KEY,64,"\n").'-----END PUBLIC KEY-----');
-		if(false===$key){return false;}
-		if(openssl_verify($responseData,base64_decode($signature),$key,OPENSSL_ALGO_SHA1)){return $regs;}else{return false;}
+		if(false!==$key && openssl_verify($responseData,base64_decode($signature),$key,OPENSSL_ALGO_SHA1)){return $regs;}
 	}
 	return false;
 }
